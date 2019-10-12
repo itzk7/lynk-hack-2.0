@@ -6,28 +6,40 @@
 	<script type="text/javascript" src="functions.js"></script>
 </head>
 <body>
+<input type="button" name="Provide Place" value = "Provide Place" onclick="togglePlaceForm();"/>
+<input type="button" id="ngo" name="Add NGO" value="Add your NGO to a place and use it as a distribution centre"/>
+<input type="button" name="Donate" value = "Donate things"/>
+
 <div id="ngoform" style="display: none">
 	<select id = "places"></select><br>
 	<input id="ngoName" placeholder="Enter NGO Name"/>
 	<input id="submitNGO" value="Enter">
 </div>
-	<input type="button" name="Provide Place" value = "Provide Place" onclick="togglePlaceForm();"/>
-	<input type="button" id="ngo" name="Add NGO" value="Add your NGO to a place and use it as a distribution centre"/>
-	<input type="button" name="Donate" value = "Donate things"/>
-	<div id = "placeform" style="display:none">
-			<div>
-			<label> Address : </label>
-			<textarea id = "place_address" name = "address"></textarea>
-			</div>
-			<div>
-				<label> Name : </label>
-				<input type="text" id = "owner_name"/>
-			</div>
-			<div>
-				<label> Contact Number : </label>
-				<input type="number" id = "owner_phone_num"/>
-			</div>
-			<button onclick="addPlace();"> Register Place </button>
+
+<div id = "placeform" style="display:none">
+	<div>
+	<label> Address : </label>
+	<textarea id = "place_address" name = "address"></textarea>
 	</div>
+	<div>
+		<label> Name : </label>
+		<input type="text" id = "owner_name"/>
+	</div>
+	<div>
+		<label> Contact Number : </label>
+		<input type="number" id = "owner_phone_num"/>
+	</div>
+	<button onclick="addPlace();"> Register Place </button>
+</div>
+<div id="supplyForm" style="display:none">
+	<input type="text" id="supplyName" placeholder="Enter Your Name"/>
+	<input type="text" id="supplyaddress" placeholder="Enter Your Address"/>
+	<input type="text" id="peopleCount" placeholder="People Needed"/>
+	<input type="text" id="phoneNumber" placeholder="Enter your phone number"/>
+	<input type="text" id="Item" placeholder="Add Item"/>
+	<div id="items">
+	</div>
+	<input id="submitSuplpy" value="Enter">
+</div>
 </body>
 </html>

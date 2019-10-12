@@ -27,8 +27,43 @@ $(document).ready(function(){
             }
         });
 	});
+
+	$("#supply").click(function(){
+	    $("#supplyForm").attr('style',"");
+	});
+
+	$("#Item").click(function(){
+	    var index = $("#items").children().length + 1;
+	    $("#items").append("<input type='text' id='item_"+ index +"' placeholder='Food/Bedsheets/Napkins'>"
+    	+"<input type='text' id='item_count_"+ index +"' placeholder='Number of items'><br>");
+	})
+
+	$("#submitSuplpy").click(function(){
+	    var data = {};
+	    data.name = $("#supplyName").val();
+	    data.address = $("#supplyaddress").val();
+	    data.numberOfPeople = $("#peopleCount").val();
+	    data.phoneNumber = $("#phoneNumber").val();
+	    var res = {};
+	    var items = $("#items").children();
+	    for(i = 0;i < items.length;i++){
+	        if($("#item_" + (i + 1)).val() != undefined)
+	            res[$("#item_" + (i + 1)).val()] = $("#item_count_" + (i + 1)).val();
+	    }
+	    data.resourceDetails = res;
+
+	    $.ajax({
+	        type : 'POST',
+            data :  JSON.stringify(data),
+            contentType: "application/json",
+            url : "http://localhost:8080/supply/",
+            success : function(data){
+                console.log("Added");
+            }
+	    });
+	});
 });
-});
+
 
 function togglePlaceForm(){
     $("#placeform").toggle();
