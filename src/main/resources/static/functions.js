@@ -28,3 +28,28 @@ $(document).ready(function(){
         });
 	});
 });
+});
+
+function togglePlaceForm(){
+    $("#placeform").toggle();
+}
+
+function addPlace(){
+    var address =  $("#place_address").val();
+    var name =  $("#owner_name").val();
+    var phone_num = $("#owner_phone_num").val();
+    var d = {};
+    d.ownername = name;
+    d.ownercontact = phone_num;
+    d.address = address;
+    $.ajax({
+        type : "POST",
+        url : "/place/add",
+        data : JSON.stringify(d),
+        contentType : "application/json",
+        success : function(r,d){
+            console.log(r);
+            console.log(d);
+        }
+    });
+}

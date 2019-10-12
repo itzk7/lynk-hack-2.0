@@ -13,4 +13,6 @@ public class Place {
     String id;
     String Address;
     Coordinate coordinate;
+    String ownercontact;
+    String ownername;
 }
