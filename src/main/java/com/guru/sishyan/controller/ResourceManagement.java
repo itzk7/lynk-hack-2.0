@@ -24,7 +24,7 @@ public class ResourceManagement {
 
     @RequestMapping(value= "/addVolunteer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer){
+    public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer) {
         volunteer.setRole("VOLUNTEER");
         volunteerRepository.save(volunteer);
         return new ResponseEntity(HttpStatus.CREATED);
@@ -37,28 +37,28 @@ public class ResourceManagement {
         return ok(validatedUser);
     }
 
-    @RequestMapping(value= "hub/add", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity createHub(@RequestBody Hub hub){
-        hub.setRole("HUB");
-        hubRepository.save(hub);
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
+//    @RequestMapping(value= "hub/add", method = RequestMethod.POST)
+//    @ResponseBody
+//    public ResponseEntity createHub(@RequestBody Hub hub){
+//        hub.setRole("HUB");
+//        hubRepository.save(hub);
+//        return new ResponseEntity(HttpStatus.CREATED);
+//    }
 
     @RequestMapping(value = "/updateStatus", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateVolunteer(@RequestBody Volunteer volunteer){
+    public ResponseEntity updateVolunteer(@RequestBody Volunteer volunteer) {
         Volunteer validatedVolunteer = volunteerRepository.findByUsernameAndPasswordAndRole(volunteer.getUsername(),volunteer.getPassword(),volunteer.getRole());
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
         return ok(volunteerRepository.save(validatedVolunteer));
     }
 
-    @RequestMapping(value= "hub/update", method = RequestMethod.PUT)
-    @ResponseBody
-    public ResponseEntity updateHub(@RequestBody Hub hub){
-        Hub fetchedHub =  hubRepository.findByUsername( hub.getUsername() );
-        fetchedHub.setResourceDetails( hub.getResourceDetails() );
-        hubRepository.save(fetchedHub);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @RequestMapping(value= "hub/update", method = RequestMethod.PUT)
+//    @ResponseBody
+//    public ResponseEntity updateHub(@RequestBody Hub hub) {
+//        Hub fetchedHub =  hubRepository.findByUsername(hub.getUsername());
+//        fetchedHub.setResourceDetails( hub.getResourceDetails() );
+//        hubRepository.save(fetchedHub);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 }

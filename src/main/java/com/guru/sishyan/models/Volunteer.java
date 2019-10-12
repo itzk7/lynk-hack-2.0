@@ -24,4 +24,6 @@ public class Volunteer extends User implements Serializable {
     @Range(min = 18)
     String age;
 
+    @NotNull
+    String hubId;
 }

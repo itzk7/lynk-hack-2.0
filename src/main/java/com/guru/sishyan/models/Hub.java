@@ -3,16 +3,26 @@ package com.guru.sishyan.models;
 import lombok.Getter;
 
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Getter
 @Setter
+@Document(collection = "Hubs")
+public class Hub implements Serializable {
 
-public class  Hub extends User {
+    @Id
+    String id;
+
+    String placeId;
+
+    String ngoName;
 
     String location;
+
     Map<String, Integer> resourceDetails;
-    Coordinate coordinate;
+
 }
