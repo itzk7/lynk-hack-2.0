@@ -19,4 +19,5 @@ public class Supply {
     Integer numberOfPeople;
     Map<String, Integer> resourceDetails;
     String phoneNumber;
+    Boolean isProcessed;
 }

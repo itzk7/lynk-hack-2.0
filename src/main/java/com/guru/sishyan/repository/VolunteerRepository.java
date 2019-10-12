@@ -4,7 +4,10 @@ import com.guru.sishyan.models.User;
 import com.guru.sishyan.models.Volunteer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 public interface VolunteerRepository extends MongoRepository<Volunteer,String> {
     public Volunteer findByUsernameAndPasswordAndRole(String username, String password,String role);
     public User findByUsernameAndPassword(String username,String password);
+    public List<Volunteer> findByIsAvailable(Boolean isAvailable);
 }
