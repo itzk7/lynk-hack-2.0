@@ -8,7 +8,12 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class TestModel implements Serializable {
+public class User implements Serializable {
+
     @Id
-    public String id;
+    String id;
+
+    String username;
+
+    String password;
 }

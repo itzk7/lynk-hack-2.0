@@ -12,15 +12,17 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Document
-public class Volunteer implements Serializable {
-    @Id
-    String id;
+public class Volunteer extends User implements Serializable {
 
     @NotNull
     String Location;
 
     @NotNull
     String[] phoneNumbers;
+
+    Boolean isAvailable = true;
+
+    String role = "VOLUNTEER";
 
     @Range(min = 18)
     String age;
