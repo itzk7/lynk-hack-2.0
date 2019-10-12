@@ -3,6 +3,7 @@ $(document).ready(function(){
 		$.ajax({
 			url : "http://localhost:8080/place/list",
 			success : function(data){
+			    $(".form").hide();
 				$("#ngoform").attr('style',"");
 				$("#places").html("");
 				for(i = 0;i < data.length;i++){
@@ -28,7 +29,18 @@ $(document).ready(function(){
         });
 	});
 
+	$("#signup").click(function(){
+	    $(".form").hide();
+	    $("#signUpForm").attr('style',"");
+	});
+
+	$("#login").click(function(){
+	    $(".form").hide();
+        $("#loginForm").attr('style',"");
+    });
+
 	$("#supply").click(function(){
+	    $(".form").hide();
 	    $("#supplyForm").attr('style',"");
 	});
 
@@ -61,6 +73,41 @@ $(document).ready(function(){
                 console.log("Added");
             }
 	    });
+	});
+
+	$("#submitVolunteer").click(function(){
+	    var data = {};
+	    data.username = $("#username").val();
+	    data.password = $("#password").val();
+	    data.location = $("#location").val();
+	    data.phoneNumber = $("#phoneNo").val();
+	    data.age = $("#age").val();
+
+	    $.ajax({
+            type : 'POST',
+            data :  JSON.stringify(data),
+            contentType: "application/json",
+            url : "http://localhost:8080/addVolunteer",
+            success : function(data){
+                console.log("Added");
+            }
+        });
+	});
+
+	$("#submitLogin").click(function(){
+	    var data = {};
+	    data.username = $("#username_login").val();
+	    data.password = $("#password_login").val();
+
+	    $.ajax({
+            type : 'POST',
+            data :  JSON.stringify(data),
+            contentType: "application/json",
+            url : "http://localhost:8080/login",
+            success : function(data){
+                console.log("Logged In");
+            }
+        });
 	});
 });
 
