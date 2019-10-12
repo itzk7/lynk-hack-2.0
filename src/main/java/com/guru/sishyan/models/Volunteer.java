@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Document
 public class Volunteer extends User implements Serializable {
 
     @NotNull
@@ -24,4 +23,5 @@ public class Volunteer extends User implements Serializable {
 
     @Range(min = 18)
     String age;
+
 }

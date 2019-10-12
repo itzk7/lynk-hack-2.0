@@ -5,6 +5,7 @@ import com.guru.sishyan.models.Hub;
 import com.guru.sishyan.models.Volunteer;
 import com.guru.sishyan.repository.HubRepository;
 import com.guru.sishyan.repository.ResourceRepository;
+import com.guru.sishyan.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class ResourceManagement {
 
     @Autowired
     HubRepository hubRepository;
+
+    @Autowired
+    VolunteerRepository volunteerRepository;
 
     @RequestMapping(value= "/addVolunteer", method = RequestMethod.POST)
     @ResponseBody
@@ -45,4 +49,11 @@ public class ResourceManagement {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity updateVolunteer(@RequestBody Volunteer volunteer){
+        Volunteer validatedVolunteer = volunteerRepository.findByUsernameAndPasswordAndRole(volunteer.getUsername(),volunteer.getPassword(),volunteer.getRole());
+        validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
+        return ok(repository.save(validatedVolunteer));
+    }
 }
