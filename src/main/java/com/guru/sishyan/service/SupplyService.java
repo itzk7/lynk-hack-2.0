@@ -26,10 +26,4 @@ public class SupplyService {
         return supplyRepository.findByIsProcessed(false);
     }
 
-//    @Scheduled(fixedDelay = 5000)
-//    public void demoServiceMethod()
-//    {
-//        System.out.println("Method executed at every 5 seconds. Current time is :: "+ new Date());
-//    }
-
 }
