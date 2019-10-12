@@ -1,4 +1,7 @@
 package com.guru.sishyan.repository;
 
-public interface PlaceRepository {
+import com.guru.sishyan.models.Place;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface PlaceRepository extends MongoRepository<Place,String> {
 }
