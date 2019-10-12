@@ -21,8 +21,6 @@ public class Hub implements Serializable {
 
     String ngoName;
 
-    String location;
-
     Map<String, Integer> resourceDetails;
 
 }
