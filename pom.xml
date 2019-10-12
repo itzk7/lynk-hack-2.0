@@ -47,7 +47,15 @@
         <dependency>
             <groupId>com.byteowls</groupId>
             <artifactId>jopencage</artifactId>
-            <version>1.2.1</version>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>my-repo1</id>
+            <name>your custom repo</name>
+            <url>https://repo.spring.io/libs-release/</url>
+        </repository>
+    </repositories>
 </project>

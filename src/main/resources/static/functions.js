@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#ngo").click(function(){
 		$.ajax({
-			url : "http://localhost:8080/place/list",
+			url : "/place/list",
 			success : function(data){
 			    $(".form").hide();
 				$("#ngoform").attr('style',"");
@@ -22,7 +22,7 @@ $(document).ready(function(){
 	        type : 'POST',
 	        data :  JSON.stringify(json),
 	        contentType: "application/json",
-            url : "http://localhost:8080/hub/add",
+            url : "/hub/add",
             success : function(data){
                 console.log("Added");
             }
@@ -68,7 +68,7 @@ $(document).ready(function(){
 	        type : 'POST',
             data :  JSON.stringify(data),
             contentType: "application/json",
-            url : "http://localhost:8080/supply/",
+            url : "/supply/",
             success : function(data){
                 console.log("Added");
             }
@@ -87,7 +87,7 @@ $(document).ready(function(){
             type : 'POST',
             data :  JSON.stringify(data),
             contentType: "application/json",
-            url : "http://localhost:8080/addVolunteer",
+            url : "/addVolunteer",
             success : function(data){
                 console.log("Added");
             }
@@ -103,7 +103,7 @@ $(document).ready(function(){
             type : 'POST',
             data :  JSON.stringify(data),
             contentType: "application/json",
-            url : "http://localhost:8080/login",
+            url : "/login",
             success : function(data){
                 console.log("Logged In");
             }

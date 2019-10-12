@@ -1,8 +1,10 @@
 package com.guru.sishyan.controller;
 
+import com.guru.sishyan.models.Coordinate;
 import com.guru.sishyan.models.Hub;
 import com.guru.sishyan.models.Place;
 import com.guru.sishyan.repository.PlaceRepository;
+import com.guru.sishyan.service.GeoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,12 @@ public class PlaceController {
     @RequestMapping(value= "place/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity addPlace(@RequestBody Place request){
+
+        Coordinate coordinate = new Coordinate();
+        Double[] latlon = GeoService.getLatLong(request.getAddress());
+        coordinate.setLatitude(latlon[0]);
+        coordinate.setLatitude(latlon[1]);
+        request.setCoordinate(coordinate);
         placeRepository.save(request);
         return new ResponseEntity(HttpStatus.CREATED);
     }
