@@ -22,8 +22,6 @@ public class Volunteer extends User implements Serializable {
 
     Boolean isAvailable = true;
 
-    String role = "VOLUNTEER";
-
     @Range(min = 18)
     String age;
 }

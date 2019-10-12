@@ -17,7 +17,9 @@ public class ResourceManagement {
     @RequestMapping(value= "/addVolunteer", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer){
+        volunteer.setRole("VOLUNTEER");
         repository.save(volunteer);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
 }
