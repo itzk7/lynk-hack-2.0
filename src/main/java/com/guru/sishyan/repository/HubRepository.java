@@ -4,4 +4,5 @@ import com.guru.sishyan.models.Hub;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface HubRepository extends MongoRepository<Hub,String> {
+    public Hub findByUsername(String username);
 }

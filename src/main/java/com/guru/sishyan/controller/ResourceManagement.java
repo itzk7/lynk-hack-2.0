@@ -41,7 +41,7 @@ public class ResourceManagement {
         return ok(validatedUser);
     }
 
-    @RequestMapping(value= "/addHub", method = RequestMethod.POST)
+    @RequestMapping(value= "hub/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity createHub(@RequestBody Hub hub){
         hub.setRole("HUB");
@@ -55,5 +55,14 @@ public class ResourceManagement {
         Volunteer validatedVolunteer = volunteerRepository.findByUsernameAndPasswordAndRole(volunteer.getUsername(),volunteer.getPassword(),volunteer.getRole());
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
         return ok(repository.save(validatedVolunteer));
+    }
+
+    @RequestMapping(value= "hub/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity updateHub(@RequestBody Hub hub){
+        Hub fetchedHub =  hubRepository.findByUsername( hub.getUsername() );
+        fetchedHub.setResourceDetails( hub.getResourceDetails() );
+        hubRepository.save(fetchedHub);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
