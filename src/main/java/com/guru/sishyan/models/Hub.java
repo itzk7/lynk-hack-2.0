@@ -10,7 +10,7 @@ import java.util.Map;
 @Getter
 @Setter
 
-public class Hub extends User {
+public class  Hub extends User {
 
     String location;
     Map<String, Integer> resourceDetails;
