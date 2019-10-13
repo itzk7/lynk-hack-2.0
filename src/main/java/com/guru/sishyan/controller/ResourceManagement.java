@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 
@@ -42,8 +45,13 @@ public class ResourceManagement {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<User> validateUser(@RequestBody User user) {
+    public ResponseEntity<User> validateUser(@RequestBody User user, HttpServletResponse httpServletResponse) {
         User validatedUser = volunteerRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+        if(validatedUser != null) {
+            Cookie cookie = new Cookie("username", validatedUser.getUsername());
+            //add cookie to response
+            httpServletResponse.addCookie(cookie);
+        }
         return ok(validatedUser);
     }
 
