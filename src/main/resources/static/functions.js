@@ -25,6 +25,8 @@ $(document).ready(function(){
             url : "/hub/add",
             success : function(data){
                 console.log("Added");
+                $("#ngoform").toggle();
+                alert("Success");
             }
         });
 	});
@@ -47,7 +49,7 @@ $(document).ready(function(){
 
 	$("#Item").click(function(){
 	    var index = $("#items").children().length + 1;
-	    $("#items").append("<input type='text' id='item_"+ index +"' placeholder='Food/Bedsheets/Medicene'>"
+	    $("#items").append("<input type='text' id='item_"+ index +"' placeholder='Food/Bedsheets/Medicine'>"
     	+"<input type='text' id='item_count_"+ index +"' placeholder='Number of items'><br>");
 	})
 
