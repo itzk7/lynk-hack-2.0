@@ -28,22 +28,27 @@ public class SupplyService {
     VolunteerRepository volunteerRepository;
 
     @Autowired
+    HubRepository hubRepository;
+
+    @Autowired
     PlaceRepository placeRepository;
 
     public void add(Supply supply) {
+        supply = supplyRepository.save(supply);
         Point p = new Point(supply.getGeoLocation().getX(),supply.getGeoLocation().getY());
-        List<Place> hubs = placeRepository.findByIsAvalableAndCoordinateNear(false,p,new Distance(10, Metrics.KILOMETERS));
+        List<Place> places = placeRepository.findByIsAvalableAndCoordinateNear(false,p,new Distance(10, Metrics.KILOMETERS));
+        Hub hub = hubRepository.findByPlaceId(places.get(0).getId());
         List<Volunteer> l = volunteerRepository.findByIsAvailableAndCoordinateNear(true,p,new Distance(10, Metrics.KILOMETERS));
         if(l.size() >= supply.getNumberOfPeople()){
             for(Volunteer v : l) {
                 v.setIsAvailable(false);
                 v.setSupplyId(supply.getId());
-                v.setHubId(hubs.get(0).getId());
+                v.setHubId(hub.getId());
             }
             volunteerRepository.saveAll(l);
             supply.setIsProcessed(true);
+            supplyRepository.save(supply);
         }
-        supplyRepository.save(supply);
     }
 
     public List<Supply> getAll() {

@@ -7,7 +7,9 @@ import lombok.Setter;
 @Setter
 public class VolunteerDetails {
     String userName;
+    String phoneNumber;
     String hubLocation;
+    String supplyLocation;
     Boolean isActive;
     String password;
     String hubId;
