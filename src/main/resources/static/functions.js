@@ -146,6 +146,24 @@ $(document).ready(function(){
     	    $("#dashboard").show();
     	}
 
+	$("#getHubDetails").click(function(){
+	    $('#records_table').toggle();
+	    $('#records_table').empty();
+        $.ajax({
+            type : 'GET',
+            dataType: 'json',
+            url : "/hub/",
+            success : function(response){
+                var trHTML = '';
+                trHTML += '<tr><td>' + "Address" + '</td><td>' + "Owner name" + '</td><td>' + "Owner Contact" + '</td></tr>';
+                $.each(response, function (i, item) {
+                    trHTML += '<tr><td>' + item.address + '</td><td>' + item.ownername + '</td><td>' + item.ownercontact + '</td></tr>';
+                });
+                $('#records_table').append(trHTML);
+                console.log( response );
+            }
+        });
+	});
 });
 
 
