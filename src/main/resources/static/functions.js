@@ -3,8 +3,8 @@ $(document).ready(function(){
 		$.ajax({
 			url : "/place/list",
 			success : function(data){
-			    $(".form").hide();
-				$("#ngoform").attr('style',"");
+				$("#ngoform").toggle();
+				hideDivs( [ "#signUpForm", "#loginForm", "#supplyForm", "#placeform" ] );
 				$("#places").html("");
 				for(i = 0;i < data.length;i++){
 					$("#places").append("<option value='"+ data[i].id+"'>" + data[i].address + "</option>");
@@ -30,23 +30,25 @@ $(document).ready(function(){
 	});
 
 	$("#signup").click(function(){
-	    $(".form").hide();
-	    $("#signUpForm").attr('style',"");
+	    $("#signUpForm").toggle();
+	    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#placeform" ] );
+
 	});
 
 	$("#login").click(function(){
-	    $(".form").hide();
-        $("#loginForm").attr('style',"");
+        $("#loginForm").toggle();
+        hideDivs( [ "#ngoform", "#signUpForm", "#supplyForm", "#placeform" ] );
+
     });
 
 	$("#supply").click(function(){
-	    $(".form").hide();
-	    $("#supplyForm").attr('style',"");
+	    $("#supplyForm").toggle();
+	    hideDivs( [ "#ngoform", "#loginForm", "#signUpForm", "#placeform" ] );
 	});
 
 	$("#Item").click(function(){
 	    var index = $("#items").children().length + 1;
-	    $("#items").append("<input type='text' id='item_"+ index +"' placeholder='Food/Bedsheets/Napkins'>"
+	    $("#items").append("<input type='text' id='item_"+ index +"' placeholder='Food/Bedsheets/Medicene'>"
     	+"<input type='text' id='item_count_"+ index +"' placeholder='Number of items'><br>");
 	})
 
@@ -105,7 +107,7 @@ $(document).ready(function(){
             contentType: "application/json",
             url : "/login",
             success : function(data){
-                console.log("Logged In");
+                console.log( data );
             }
         });
 	});
@@ -114,6 +116,7 @@ $(document).ready(function(){
 
 function togglePlaceForm(){
     $("#placeform").toggle();
+    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#signUpForm" ] );
 }
 
 function addPlace(){
@@ -134,4 +137,10 @@ function addPlace(){
             console.log(d);
         }
     });
+}
+
+function hideDivs(divIds){
+    for( var i = 0; i < divIds.length; ++i ){
+        $( divIds[ i ] ).css("display","none");
+    }
 }

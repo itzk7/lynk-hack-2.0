@@ -7,58 +7,71 @@
 	<script type="text/javascript" src="functions.js"></script>
 </head>
 <body>
-<div>
-<input class="button" type="button" name="Provide Place" value = "Provide Place" onclick="togglePlaceForm();"/><br>
-<input class="button" type="button" id="ngo" name="Add NGO" value="Add your NGO.."/><br>
-<input class="button" type="button" id="signup" value="Volunteer Signup"/><br>
-<input class="button" type="button" id="login" value="Volunteer Login"/><br>
-<input class="button" type="button" id="supply" name="Donate" value = "Donate things"/><br>
-</div>
-<div id="ngoform" class="form" style="display: none">
-	<select id = "places"></select><br>
-	<input id="ngoName" placeholder="Enter NGO Name"/>
-	<input class="button" type="button" id="submitNGO" value="Enter">
-</div>
+<div id="dashboard">
+<div> <input class="button" type="button" name="Provide Place" value = "Provide Place" onclick="togglePlaceForm();"/> </div>
 
-<div id = "placeform" class="form" style="display:none">
-	<div>
-	<label> Address : </label>
-	<textarea id = "place_address" name = "address"></textarea>
+	<div id = "placeform" class="form" style="display:none">
+		<div>
+			<label> Address : </label>
+			<textarea id = "place_address" name = "address"></textarea>
+		</div>
+		<div>
+			<label> Name : </label>
+			<input type="text" id = "owner_name"/>
+		</div>
+		<div>
+			<label> Contact Number : </label>
+			<input type="number" id = "owner_phone_num"/>
+		</div>
+		<button class="button" onclick="addPlace();"> Register Place </button>
 	</div>
-	<div>
-		<label> Name : </label>
-		<input type="text" id = "owner_name"/>
+
+<div><input class="button" type="button" id="ngo" name="Add NGO" value="Add your NGO.."/></div>
+
+	<div id="ngoform" class="form" style="display: none">
+		<select id = "places"></select><br>
+		<input id="ngoName" placeholder="Enter NGO Name"/>
+		<input class="button" type="button" id="submitNGO" value="Enter">
 	</div>
-	<div>
-		<label> Contact Number : </label>
-		<input type="number" id = "owner_phone_num"/>
+
+<div><input class="button" type="button" id="signup" value="Volunteer Signup"/><br></div>
+
+	<div id="signUpForm" class="form" style="display:none">
+		<input type="text" id="username" placeholder="username"/>
+		<input type="text" id="password" placeholder="password"/>
+		<input type="text" id="location" placeholder="location"/>
+		<input type="text" id="phoneNo" placeholder="Phone Number"/>
+		<input type="text" id="age" placeholder="Age"/>
+		<input class="button" type="button" id="submitVolunteer" value="Submit">
 	</div>
-	<button class="button" onclick="addPlace();"> Register Place </button>
-</div>
+
+
+<div> <input class="button" type="button" id="login" value="Volunteer Login"/></div>
+
+	<div id="loginForm" class="form" style="display:none">
+		<input type="text" id="username_login" placeholder="username">
+		<input type="text" id="password_login" placeholder="password">
+		<input class="button" type="button" id="submitLogin" value="Submit">
+	</div>
+
+
+<div><input class="button" type="button" id="supply" name="Donate" value = "Donate things"/> </div>
+
 <div id="supplyForm" class="form" style="display:none">
 	<input type="text" id="supplyName" placeholder="Enter Your Name"/>
 	<input type="text" id="supplyaddress" placeholder="Enter Your Address"/>
 	<input type="text" id="peopleCount" placeholder="People Needed"/>
 	<input type="text" id="phoneNumber" placeholder="Enter your phone number"/>
-	<input class="button" type="button" id="Item" value="Add Item"/>
 	<div id="items">
 	</div>
+	<input class="button" type="button" id="Item" value="Add Item"/>
 	<input class="button" type="button" id="submitSuplpy" value="Enter">
 </div>
-
-<div id="signUpForm" class="form" style="display:none">
-	<input type="text" id="username" placeholder="username"/>
-	<input type="text" id="password" placeholder="password"/>
-	<input type="text" id="location" placeholder="location"/>
-	<input type="text" id="phoneNo" placeholder="Phone Number"/>
-	<input type="text" id="age" placeholder="Age"/>
-	<input class="button" type="button" id="submitVolunteer" value="Submit">
 </div>
 
-<div id="loginForm" class="form" style="display:none">
-	<input type="text" id="username_login" placeholder="username">
-	<input type="text" id="password_login" placeholder="password">
-	<input class="button" type="button" id="submitLogin" value="Submit">
+<div id = "volunteertab">
+	
 </div>
+
 </body>
 </html>
