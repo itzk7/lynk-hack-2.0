@@ -91,7 +91,7 @@ $(document).ready(function(){
             data :  JSON.stringify(data),
             contentType: "application/json",
             url : "/addVolunteer",
-            success : function(data){
+            success : function(){
                 console.log("Added");
                 $.ajax({
                     type : "GET",
@@ -114,7 +114,7 @@ $(document).ready(function(){
             data :  JSON.stringify(data),
             contentType: "application/json",
             url : "/login",
-            success : function(data){
+            success : function(){
                 $.ajax({
                     type : "GET",
                     url : "volunteerdetails?username="+data.username,
