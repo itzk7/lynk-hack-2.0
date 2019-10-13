@@ -16,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Optional;
+import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -64,6 +65,27 @@ public class ResourceManagement {
     public ResponseEntity updateVolunteer(@RequestBody Volunteer volunteer) {
         Volunteer validatedVolunteer = volunteerRepository.findByUsernameAndPasswordAndRole(volunteer.getUsername(),volunteer.getPassword(),volunteer.getRole());
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
+        Supply supply = supplyRepository.findById(validatedVolunteer.getSupplyId()).orElseThrow(null);
+        int count = supply.getNumberOfPeople() - 1;
+        if(count == 0) {
+            supply.setIsProcessed(true);
+            Hub hub = hubRepository.findById(validatedVolunteer.getHubId()).orElse(null);
+            Map<String,Integer> map = hub.getResourceDetails();
+            Map<String,Integer> supplyMap = supply.getResourceDetails();
+            for(Map.Entry<String,Integer> entry : supplyMap.entrySet()){
+                if(map.get(entry.getKey()) != null){
+                    map.put(entry.getKey(),entry.getValue() + map.get(entry.getKey()));
+                }
+                else
+                    map.put(entry.getKey(),entry.getValue());
+            }
+            hub.setResourceDetails(map);
+            hubRepository.save(hub);
+        }
+        else{
+            supply.setNumberOfPeople(count);
+        }
+        supplyRepository.save(supply);
         kafkaTemplate.send("supply-demand","User is online");
         return ok(volunteerRepository.save(validatedVolunteer));
     }
@@ -85,5 +107,4 @@ public class ResourceManagement {
         details.setIsActive( volunteer.getIsAvailable() );
         return ok(details);
     }
-
 }
