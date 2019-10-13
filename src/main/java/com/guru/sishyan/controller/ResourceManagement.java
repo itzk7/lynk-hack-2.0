@@ -72,7 +72,7 @@ public class ResourceManagement {
         Volunteer validatedVolunteer = volunteerRepository.findByUsername(volunteer.getUsername());
         Double[] latlon = GeoService.getLatLong(volunteer.getLocation());
         GeoJsonPoint coordinate = new GeoJsonPoint(latlon[0],latlon[1]);
-        volunteer.setCoordinate(coordinate);
+        validatedVolunteer.setCoordinate(coordinate);
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
         Supply supply = supplyRepository.findById(validatedVolunteer.getSupplyId()).orElseThrow(null);
         int count = supply.getNumberOfPeople() - 1;
@@ -106,24 +106,24 @@ public class ResourceManagement {
         Optional<Supply> supply = Optional.empty();
         Optional<Hub> hub = Optional.empty();
         Optional<Place> place = Optional.empty();
-        if(volunteer.getSupplyId() != null)
-            supply = supplyRepository.findById( volunteer.getSupplyId() );
-
-        if(volunteer.getHubId() != null) {
-            hub = hubRepository.findById(volunteer.getHubId());
-            place = placeRepository.findById( hub.get().getPlaceId() );
-        }
-
         VolunteerDetails details = new VolunteerDetails();
-        details.setUserName( volunteer.getUsername() );
-        details.setSupplyLocation(supply.get().getAddress());
-        details.setPhoneNumber(supply.get().getPhoneNumber());
-        if( place.isPresent() ) {
-            details.setHubLocation(place.get().getAddress());
-            details.setHubId( hub.get().getId() );
-            details.setSupplyId( supply.get().getId() );
-        }
+        if(volunteer.getSupplyId() != null) {
+            supply = supplyRepository.findById(volunteer.getSupplyId());
 
+            if (volunteer.getHubId() != null) {
+                hub = hubRepository.findById(volunteer.getHubId());
+                place = placeRepository.findById(hub.get().getPlaceId());
+            }
+            details.setUserName(volunteer.getUsername());
+            details.setSupplyLocation(supply.get().getAddress());
+            details.setPhoneNumber(supply.get().getPhoneNumber());
+            if (place.isPresent()) {
+                details.setHubLocation(place.get().getAddress());
+                details.setHubId(hub.get().getId());
+                details.setSupplyId(supply.get().getId());
+            }
+
+        }
         details.setIsActive( volunteer.getIsAvailable() );
         return ok(details);
     }
