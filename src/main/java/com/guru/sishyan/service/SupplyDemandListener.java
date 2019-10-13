@@ -34,8 +34,11 @@ public class SupplyDemandListener {
             List<Place> hubs = placeRepository.findByIsAvalableAndCoordinateNear(false, p, new Distance(10, Metrics.KILOMETERS));
             List<Volunteer> l = volunteerRepository.findByIsAvailableAndCoordinateNear(true, p, new Distance(10, Metrics.KILOMETERS));
             if (l.size() >= supply.getNumberOfPeople()) {
-                for (Volunteer v : l)
+                for (Volunteer v : l) {
                     v.setIsAvailable(false);
+                    v.setSupplyId(supply.getId());
+                    v.setHubId(hubs.get(0).getId());
+                }
                 volunteerRepository.saveAll(l);
                 supply.setIsProcessed(true);
             }

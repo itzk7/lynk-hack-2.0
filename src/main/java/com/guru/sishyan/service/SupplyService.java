@@ -37,7 +37,8 @@ public class SupplyService {
         if(l.size() >= supply.getNumberOfPeople()){
             for(Volunteer v : l) {
                 v.setIsAvailable(false);
-                v.setSupplyId( supply.getId() );
+                v.setSupplyId(supply.getId());
+                v.setHubId(hubs.get(0).getId());
             }
             volunteerRepository.saveAll(l);
             supply.setIsProcessed(true);
