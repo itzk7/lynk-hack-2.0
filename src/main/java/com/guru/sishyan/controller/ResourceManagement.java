@@ -43,13 +43,14 @@ public class ResourceManagement {
 
     @RequestMapping(value= "/addVolunteer", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer) {
+    public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer, HttpServletResponse httpServletResponse) {
         volunteer.setRole("VOLUNTEER");
         Double[] latlon = GeoService.getLatLong(volunteer.getLocation());
         GeoJsonPoint coordinate = new GeoJsonPoint(latlon[0],latlon[1]);
         volunteer.setCoordinate(coordinate);
         volunteerRepository.save(volunteer);
         Cookie cookie = new Cookie("username", volunteer.getUsername());
+        httpServletResponse.addCookie(cookie);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
