@@ -9,4 +9,7 @@ public class VolunteerDetails {
     String userName;
     String hubLocation;
     Boolean isActive;
+    String password;
+    String hubId;
+    String supplyId;
 }

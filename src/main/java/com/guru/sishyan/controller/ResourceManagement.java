@@ -2,6 +2,7 @@ package com.guru.sishyan.controller;
 
 import com.guru.sishyan.models.*;
 import com.guru.sishyan.repository.HubRepository;
+import com.guru.sishyan.repository.PlaceRepository;
 import com.guru.sishyan.repository.SupplyRepository;
 import com.guru.sishyan.repository.VolunteerRepository;
 import com.guru.sishyan.service.GeoService;
@@ -29,6 +30,9 @@ public class ResourceManagement {
 
     @Autowired
     SupplyRepository supplyRepository;
+
+    @Autowired
+    PlaceRepository placeRepository;
 
     @Autowired
     KafkaTemplate<String,String> kafkaTemplate;
@@ -95,13 +99,22 @@ public class ResourceManagement {
     public ResponseEntity<VolunteerDetails> userDetails(@RequestParam String username) {
         Volunteer volunteer = volunteerRepository.findByUsername(username);
         Optional<Supply> supply = Optional.empty();
+        Optional<Hub> hub = Optional.empty();
+        Optional<Place> place = Optional.empty();
         if(volunteer.getSupplyId() != null)
             supply = supplyRepository.findById( volunteer.getSupplyId() );
 
+        if(volunteer.getHubId() != null) {
+            hub = hubRepository.findById(volunteer.getHubId());
+            place = placeRepository.findById( hub.get().getPlaceId() );
+        }
+
         VolunteerDetails details = new VolunteerDetails();
         details.setUserName( volunteer.getUsername() );
-        if( supply.isPresent() ) {
-            details.setHubLocation(supply.get().getAddress());
+        if( place.isPresent() ) {
+            details.setHubLocation(place.get().getAddress());
+            details.setHubId( hub.get().getId() );
+            details.setSupplyId( supply.get().getId() );
         }
 
         details.setIsActive( volunteer.getIsAvailable() );
