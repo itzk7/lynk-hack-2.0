@@ -29,4 +29,6 @@ public class Volunteer extends User implements Serializable {
 
     @NotNull
     String hubId;
+
+
 }
