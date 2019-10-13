@@ -1,11 +1,14 @@
 package com.guru.sishyan.controller;
 
+import com.guru.sishyan.models.Coordinate;
 import com.guru.sishyan.models.User;
 import com.guru.sishyan.models.Hub;
 import com.guru.sishyan.models.Volunteer;
 import com.guru.sishyan.repository.HubRepository;
 import com.guru.sishyan.repository.VolunteerRepository;
+import com.guru.sishyan.service.GeoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,6 +33,9 @@ public class ResourceManagement {
     @ResponseBody
     public ResponseEntity addVolunteer(@RequestBody Volunteer volunteer) {
         volunteer.setRole("VOLUNTEER");
+        Double[] latlon = GeoService.getLatLong(volunteer.getLocation());
+        GeoJsonPoint coordinate = new GeoJsonPoint(latlon[0],latlon[1]);
+        volunteer.setCoordinate(coordinate);
         volunteerRepository.save(volunteer);
         return new ResponseEntity(HttpStatus.CREATED);
     }

@@ -6,6 +6,7 @@ import com.guru.sishyan.models.Place;
 import com.guru.sishyan.repository.PlaceRepository;
 import com.guru.sishyan.service.GeoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,10 @@ public class PlaceController {
     @ResponseBody
     public ResponseEntity addPlace(@RequestBody Place request){
 
-        Coordinate coordinate = new Coordinate();
         Double[] latlon = GeoService.getLatLong(request.getAddress());
-        coordinate.setLatitude(latlon[0]);
-        coordinate.setLatitude(latlon[1]);
-        request.setCoordinate(coordinate);
+        GeoJsonPoint point = new GeoJsonPoint(latlon[0],latlon[1]);
+        request.setCoordinate(point);
+        request.setIsAvalable(true);
         placeRepository.save(request);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -33,7 +33,7 @@ public class PlaceController {
     @RequestMapping(value= "place/list", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity listAll(){
-        List<Place> places = placeRepository.findAll();
+        List<Place> places = placeRepository.findByIsAvalable(true);
         return ResponseEntity.ok(places);
     }
 

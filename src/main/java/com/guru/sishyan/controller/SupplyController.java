@@ -1,8 +1,12 @@
 package com.guru.sishyan.controller;
 
+import com.guru.sishyan.models.Coordinate;
 import com.guru.sishyan.models.Supply;
+import com.guru.sishyan.service.GeoService;
 import com.guru.sishyan.service.SupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJson;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,9 @@ public class SupplyController {
 
     @PostMapping("/")
     public void add(@RequestBody Supply supply) {
+        Double[] latlon = GeoService.getLatLong(supply.getAddress());
+        GeoJsonPoint point = new GeoJsonPoint(latlon[0],latlon[1]);
+        supply.setGeoLocation(point);
         supplyService.add(supply);
     }
 

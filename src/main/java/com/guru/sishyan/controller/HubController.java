@@ -2,9 +2,11 @@ package com.guru.sishyan.controller;
 
 
 import com.guru.sishyan.models.Hub;
+import com.guru.sishyan.models.Place;
 import com.guru.sishyan.models.Request;
 import com.guru.sishyan.models.RequestType;
 import com.guru.sishyan.repository.HubRepository;
+import com.guru.sishyan.repository.PlaceRepository;
 import com.guru.sishyan.service.HubService;
 import com.guru.sishyan.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +56,15 @@ public class HubController {
     @Autowired
     HubRepository hubRepository;
 
+    @Autowired
+    PlaceRepository placeRepository;
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Hub> addHub(@RequestBody Hub hub) {
+        Place place = placeRepository.findById(hub.getPlaceId()).orElse(null);
+        place.setIsAvalable(false);
+        placeRepository.save(place);
         Hub addedHub = hubRepository.save(hub);
         return ok(addedHub);
     }
