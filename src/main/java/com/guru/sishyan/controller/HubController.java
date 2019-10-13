@@ -78,8 +78,9 @@ public class HubController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Hub>> getHub(){
-        return ok(hubRepository.findAll());
+    public ResponseEntity<List<Place>> getHub(){
+
+        return ok(placeRepository.findByIsAvalable(false));
     }
 
     @PostMapping("/need")
