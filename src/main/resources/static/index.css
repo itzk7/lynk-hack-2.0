@@ -1,6 +1,11 @@
+.button-wrapper{
+    width : 100%;
+    text-align : center;
+}
+
 .button{
     margin: 10px;
-    width: 100%;
+    width : 75%;
     background-color: #5ecFff;
     border: none;
     color: white;
@@ -12,13 +17,18 @@
 }
 
 .form input:not([type=button]), .form textarea {
-  width: 100%;
+  width: 90%;
   height : 25px;
   margin: 5px;
   border: 2px solid black;
 }
 div.form{
     background-color : #ddd;
+    width : 70%;
+}
+
+.form-wrapper{
+    padding-left:15%;
 }
 
 .submit-button{

@@ -4,7 +4,7 @@ $(document).ready(function(){
 			url : "/place/list",
 			success : function(data){
 				$("#ngoform").toggle();
-				hideDivs( [ "#signUpForm", "#loginForm", "#supplyForm", "#placeform" ] );
+				hideDivs( [ "#signUpForm", "#loginForm", "#supplyForm", "#placeform", "#getHubDetails" ] );
 				$("#places").html("");
 				for(i = 0;i < data.length;i++){
 					$("#places").append("<option value='"+ data[i].id+"'>" + data[i].address + "</option>");
@@ -33,18 +33,18 @@ $(document).ready(function(){
 
 	$("#signup").click(function(){
 	    $("#signUpForm").toggle();
-	    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#placeform" ] );
+	    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#placeform", "#getHubDetails" ] );
 	});
 
 	$("#login").click(function(){
         $("#loginForm").toggle();
-        hideDivs( [ "#ngoform", "#signUpForm", "#supplyForm", "#placeform" ] );
+        hideDivs( [ "#ngoform", "#signUpForm", "#supplyForm", "#placeform", "#getHubDetails" ] );
 
     });
 
 	$("#supply").click(function(){
 	    $("#supplyForm").toggle();
-	    hideDivs( [ "#ngoform", "#loginForm", "#signUpForm", "#placeform" ] );
+	    hideDivs( [ "#ngoform", "#loginForm", "#signUpForm", "#placeform", "#getHubDetails" ] );
 	});
 
 	$("#Item").click(function(){
@@ -171,7 +171,7 @@ $(document).ready(function(){
 
 function togglePlaceForm(){
     $("#placeform").toggle();
-    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#signUpForm" ] );
+    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#signUpForm", "#getHubDetails" ] );
 }
 
 function addPlace(){

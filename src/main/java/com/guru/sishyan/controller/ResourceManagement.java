@@ -48,6 +48,7 @@ public class ResourceManagement {
         GeoJsonPoint coordinate = new GeoJsonPoint(latlon[0],latlon[1]);
         volunteer.setCoordinate(coordinate);
         volunteerRepository.save(volunteer);
+        Cookie cookie = new Cookie("username", volunteer.getUsername());
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
