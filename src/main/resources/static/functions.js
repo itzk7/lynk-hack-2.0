@@ -142,6 +142,8 @@ $(document).ready(function(){
                     displayVolunteer( data );
                 }
             });
+    	}else{
+    	    $("#dashboard").show();
     	}
 
 });
@@ -180,7 +182,7 @@ function hideDivs(divIds){
 
 function displayVolunteer(volunteer){
     $("#dashboard").hide();
-    $("#current_assignment").html(volunteer);
-    $("#volunteer").val(volunteer.username)
+    var userData = "<div> Name : "+volunteer.userName + "</div>";
+    $("#current_assignment").html(userData);
     $("#volunteertab").show();
 }
