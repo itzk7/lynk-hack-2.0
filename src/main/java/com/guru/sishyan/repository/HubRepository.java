@@ -9,4 +9,5 @@ import java.awt.*;
 import java.util.List;
 
 public interface HubRepository extends MongoRepository<Hub,String> {
+    public Hub findByPlaceId(String placeId);
 }

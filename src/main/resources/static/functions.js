@@ -202,7 +202,40 @@ function hideDivs(divIds){
 
 function displayVolunteer(volunteer){
     $("#dashboard").hide();
-    var userData = "<div> Name : "+volunteer.userName + "</div>";
-    $("#current_assignment").html(userData);
-    $("#volunteertab").show();
+    if(volunteer.isActive){
+        $("#current_assignment").html("Currently no tasks available");
+        $("#volunteertab").show();
+    }
+    else{
+        var userData = "<div><div> Name : "+volunteer.userName + "</div><br>";
+        userData += "<div> Drop Location : " + volunteer.hubLocation + "</div><br>"
+        userData += "<div> PickUp Location : " + volunteer.supplyLocation + "</div><br>"
+        userData += "<div> Phone Number : " + volunteer.phoneNumber+ "</div><br></div>"
+        userData += "<div><input type='text' placeholder='Enter New Location' id='NewLocation'></div><br>"
+        userData += "<div><input type='button' id='UpdateStatus' value='Enable your availablity to get next set of tasks'></div></div>"
+        $("#current_assignment").html(userData);
+        $("#volunteertab").show();
+
+        var data = {};
+        data.username = volunteer.userName;
+        data.isAvailable = true;
+
+        $("#UpdateStatus").click(function(){
+            if($("#NewLocation").val() == ""){
+                alert("New Location can't be empty");
+                return;
+            }
+            data.location = $("#NewLocation").val();
+            $.ajax({
+                type : "PUT",
+                url : "/updateStatus",
+                data : JSON.stringify(data),
+                contentType : "application/json",
+                success : function(r,d){
+                    $("#current_assignment").html("Currently no tasks available");
+                    $("#volunteertab").show();
+                }
+            });
+        });
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Map;
 
@@ -68,14 +69,17 @@ public class ResourceManagement {
     @RequestMapping(value = "/updateStatus", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity updateVolunteer(@RequestBody Volunteer volunteer) {
-        Volunteer validatedVolunteer = volunteerRepository.findByUsernameAndPasswordAndRole(volunteer.getUsername(),volunteer.getPassword(),volunteer.getRole());
+        Volunteer validatedVolunteer = volunteerRepository.findByUsername(volunteer.getUsername());
+        Double[] latlon = GeoService.getLatLong(volunteer.getLocation());
+        GeoJsonPoint coordinate = new GeoJsonPoint(latlon[0],latlon[1]);
+        volunteer.setCoordinate(coordinate);
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
         Supply supply = supplyRepository.findById(validatedVolunteer.getSupplyId()).orElseThrow(null);
         int count = supply.getNumberOfPeople() - 1;
         if(count == 0) {
             supply.setIsProcessed(true);
             Hub hub = hubRepository.findById(validatedVolunteer.getHubId()).orElse(null);
-            Map<String,Integer> map = hub.getResourceDetails();
+            Map<String,Integer> map = (hub.getResourceDetails() != null) ? hub.getResourceDetails() : new HashMap<String,Integer>();
             Map<String,Integer> supplyMap = supply.getResourceDetails();
             for(Map.Entry<String,Integer> entry : supplyMap.entrySet()){
                 if(map.get(entry.getKey()) != null){
@@ -112,6 +116,8 @@ public class ResourceManagement {
 
         VolunteerDetails details = new VolunteerDetails();
         details.setUserName( volunteer.getUsername() );
+        details.setSupplyLocation(supply.get().getAddress());
+        details.setPhoneNumber(supply.get().getPhoneNumber());
         if( place.isPresent() ) {
             details.setHubLocation(place.get().getAddress());
             details.setHubId( hub.get().getId() );
