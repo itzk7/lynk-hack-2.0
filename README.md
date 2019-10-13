@@ -1,2 +1,8 @@
 # lynk-hack-2.0
-management system for logistics to provide com.guru.sishyan.service for flood victims
+
+Description
+Automated logistics collector service provider. One can supply a demand, setup a hub.
+
+
+Tech stack:
+Java, Spring boot, Mongodb, JQuery, Opencage (Geocoding API), Kafka
