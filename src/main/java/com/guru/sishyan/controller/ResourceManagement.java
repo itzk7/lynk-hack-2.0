@@ -1,10 +1,8 @@
 package com.guru.sishyan.controller;
 
-import com.guru.sishyan.models.Coordinate;
-import com.guru.sishyan.models.User;
-import com.guru.sishyan.models.Hub;
-import com.guru.sishyan.models.Volunteer;
+import com.guru.sishyan.models.*;
 import com.guru.sishyan.repository.HubRepository;
+import com.guru.sishyan.repository.SupplyRepository;
 import com.guru.sishyan.repository.VolunteerRepository;
 import com.guru.sishyan.service.GeoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Optional;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 
@@ -25,6 +25,9 @@ public class ResourceManagement {
 
     @Autowired
     HubRepository hubRepository;
+
+    @Autowired
+    SupplyRepository supplyRepository;
 
     @Autowired
     KafkaTemplate<String,String> kafkaTemplate;
@@ -63,6 +66,24 @@ public class ResourceManagement {
         validatedVolunteer.setIsAvailable(volunteer.getIsAvailable());
         kafkaTemplate.send("supply-demand","User is online");
         return ok(volunteerRepository.save(validatedVolunteer));
+    }
+
+    @RequestMapping(value = "/volunteerdetails", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<VolunteerDetails> userDetails(@RequestParam String username) {
+        Volunteer volunteer = volunteerRepository.findByUsername(username);
+        Optional<Supply> supply = Optional.empty();
+        if(volunteer.getSupplyId() != null)
+            supply = supplyRepository.findById( volunteer.getSupplyId() );
+
+        VolunteerDetails details = new VolunteerDetails();
+        details.setUserName( volunteer.getUsername() );
+        if( supply.isPresent() ) {
+            details.setHubLocation(supply.get().getAddress());
+        }
+
+        details.setIsActive( volunteer.getIsAvailable() );
+        return ok(details);
     }
 
 }

@@ -32,7 +32,6 @@ $(document).ready(function(){
 	$("#signup").click(function(){
 	    $("#signUpForm").toggle();
 	    hideDivs( [ "#ngoform", "#loginForm", "#supplyForm", "#placeform" ] );
-
 	});
 
 	$("#login").click(function(){
@@ -92,6 +91,13 @@ $(document).ready(function(){
             url : "/addVolunteer",
             success : function(data){
                 console.log("Added");
+                $.ajax({
+                    type : "GET",
+                    url : "volunteerdetails?username="+data.username,
+                    success : function(data){
+                        displayVolunteer( data );
+                    }
+                });
             }
         });
 	});
@@ -107,10 +113,37 @@ $(document).ready(function(){
             contentType: "application/json",
             url : "/login",
             success : function(data){
-                console.log( data );
+                $.ajax({
+                    type : "GET",
+                    url : "volunteerdetails?username="+data.username,
+                    success : function(data){
+                        displayVolunteer( data );
+                    }
+                });
             }
         });
 	});
+
+    var cookieArr = document.cookie.split(";");
+    var isLoggedIn = false;
+    for( var i =0; i < cookieArr.length; ++i ){
+        var key = cookieArr[i].split("=");
+        if( key[0].trim() == "username" ){
+            isLoggedIn = true;
+            break;
+        }
+    }
+
+	if( isLoggedIn ){
+    	    $.ajax({
+                type : "GET",
+                url : "volunteerdetails?username="+key[1],
+                success : function(data){
+                    displayVolunteer( data );
+                }
+            });
+    	}
+
 });
 
 
@@ -143,4 +176,11 @@ function hideDivs(divIds){
     for( var i = 0; i < divIds.length; ++i ){
         $( divIds[ i ] ).css("display","none");
     }
+}
+
+function displayVolunteer(volunteer){
+    $("#dashboard").hide();
+    $("#current_assignment").html(volunteer);
+    $("#volunteer").val(volunteer.username)
+    $("#volunteertab").show();
 }

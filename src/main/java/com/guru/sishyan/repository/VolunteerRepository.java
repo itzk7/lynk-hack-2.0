@@ -13,4 +13,5 @@ public interface VolunteerRepository extends MongoRepository<Volunteer,String> {
     public User findByUsernameAndPassword(String username,String password);
     public List<Volunteer> findByIsAvailable(Boolean isAvailable);
     List<Volunteer> findByIsAvailableAndCoordinateNear(Boolean isAvailable, Point p, Distance d);
+    public Volunteer findByUsername(String username);
 }
