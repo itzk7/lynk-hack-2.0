@@ -2,19 +2,17 @@ package com.guru.sishyan.controller;
 
 
 import com.guru.sishyan.models.Hub;
-<<<<<<< HEAD
 import com.guru.sishyan.models.Place;
 import com.guru.sishyan.models.Request;
 import com.guru.sishyan.models.RequestType;
 import com.guru.sishyan.repository.HubRepository;
 import com.guru.sishyan.repository.PlaceRepository;
-=======
 import com.guru.sishyan.models.HubRequest;
 import com.guru.sishyan.models.Request;
 import com.guru.sishyan.models.RequestType;
 import com.guru.sishyan.repository.HubRepository;
 import com.guru.sishyan.service.HubRequestService;
->>>>>>> added cookies functionality
+
 import com.guru.sishyan.service.HubService;
 import com.guru.sishyan.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
